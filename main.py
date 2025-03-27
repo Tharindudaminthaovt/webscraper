@@ -9,62 +9,55 @@ import pytz
 from flask_socketio import SocketIO, emit
 import time
 import threading
-import os
-import json
-import firebase_admin
 from firebase_admin import credentials, initialize_app, db
+import firebase_admin
 
 # Initialize Flask and Socket.IO
 app = Flask(__name__)
+
 socketio = SocketIO(app)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Initialize Firebase
-firebase_creds = os.getenv("FIREBASE_CREDS")  # Fetch from environment variable
-
-if firebase_creds:
-    creds_dict = json.loads(firebase_creds)  # Parse JSON string into a dictionary
-    cred = credentials.Certificate(creds_dict)  # Use parsed JSON object
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': 'https://stock-market-data-8947e-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    })
-else:
-    print("Error: FIREBASE_CREDS environment variable not set")
+cred = credentials.Certificate("creds.json")  # Ensure this path is correct
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://stock-market-data-8947e-default-rtdb.asia-southeast1.firebasedatabase.app/'
+})
 
 # Global Firebase reference
 ref = db.reference('/cse_data')
 
 def scrape_cse_data():
     """Scrape data from CSE website."""
-    try:
-        utc_now = pytz.utc.localize(datetime.datetime.utcnow())
-        today = utc_now.astimezone(pytz.timezone("Asia/Colombo")).strftime('%Y-%m-%d')
+    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
+    today = utc_now.astimezone(pytz.timezone("Asia/Colombo")).strftime('%Y-%m-%d')
+      # 
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
 
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-gpu")
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.implicitly_wait(10)
 
-        driver = webdriver.Chrome(options=chrome_options)
-        driver.implicitly_wait(10)
+    driver.get('https://www.cse.lk/pages/trade-summary/trade-summary.component.html')
+    final_select = Select(driver.find_element("name", 'DataTables_Table_0_length'))
+    final_select.select_by_visible_text('All')
 
-        driver.get('https://www.cse.lk/pages/trade-summary/trade-summary.component.html')
-        final_select = Select(driver.find_element("name", 'DataTables_Table_0_length'))
-        final_select.select_by_visible_text('All')
+    WebDriverWait(driver, 3)
+    df = pd.read_html(driver.page_source)[0]
+    df['Date'] = today
 
-        WebDriverWait(driver, 3)
-        df = pd.read_html(driver.page_source)[0]
-        df['Date'] = today
 
-        # Sanitize column names
-        df.columns = df.columns.str.replace(r'[\$#\[\]\/\.\s]', '_', regex=True)
-        driver.quit()
-        return df.to_dict(orient='records')
+# Check the column names
+   
 
-    except Exception as e:
-        print(f"Error scraping CSE data: {str(e)}")
-        return []
+# Sanitize column names
+    df.columns = df.columns.str.replace(r'[\$#\[\]\/\.\s]', '_', regex=True)
+    print(df.columns)
+    driver.quit()
+    return df.to_dict(orient='records')
 
 def background_scraper():
     """Continuous scraping and broadcasting."""
@@ -74,13 +67,14 @@ def background_scraper():
             today = utc_now.astimezone(pytz.timezone("Asia/Colombo")).strftime('%Y-%m-%d')
 
             # Check if today's data already exists
+            #existing_data = ref.order_by_child('Date').equal_to(today).get()
             existing_keys = ref.get()
             if existing_keys:
                 for key in existing_keys.keys():
                     if key.startswith(today):  # Check if any key starts with today's date
                         print(f"Data for {today} already exists in Firebase (Key: {key}). Skipping scrape.")
                         time.sleep(8640)  # Sleep for 24 hours before checking again
-                        continue  # Skip to the next iteration
+                        continue# Skip to the next iteration
 
             data = scrape_cse_data()
             if not data:
@@ -101,9 +95,9 @@ def background_scraper():
 
         except Exception as e:
             print(f"Scraping error: {str(e)}")
-            time.sleep(300)  # Sleep before retrying in case of an error
 
         time.sleep(300)  # Sleep for 5 minutes before next attempt
+
 
 @app.route('/get_cse_data', methods=['GET'])
 def get_cse_data():
@@ -116,11 +110,6 @@ def handle_connect():
     """Handle WebSocket connections."""
     print('Client connected')
     emit('status', {'message': 'Connected to live CSE feed'})
-
-@socketio.on('disconnect')
-def handle_disconnect():
-    """Handle WebSocket disconnections."""
-    print('Client disconnected')
 
 if __name__ == '__main__':
     # Start background scraper thread
