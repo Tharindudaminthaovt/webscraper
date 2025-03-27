@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "stock-market-data-8947e",
+  "private_key_id": "ac0cfbbf638efb25b54fa20d3d29040c78acc8f9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDEI7iw/3bQcLqp\nDMr/eKmaXhWt6BacBt1AIJD1CqAj2IxDioF/BtW9XfROqGF2ft0IACuI2H75afk+\n2/gHJKJLu2u8x1pHey4PwgqSRAZpkbf/kFmCnNahuZ7QKRaywRQtQvAVB3Tj2I5G\n8rzfIiPMN4/5T5sv1zYo4gjwUlLkMsZ68poOjeGBqSsMoGPivLf1ZBLy5fl4L5Db\n/KAOLUfb6Oq3olxGG3bMZr4XhzHx4GQIfikBBhPDkU3zB0JTdVfVQWnRDfOnnVmt\nLuVPz/dd4oWrpiDpv0zmiNLQbEvGoaSzRrVgrX9ruqCpqyMKo8zC7mC/nioBe7uj\ntRR3jzyBAgMBAAECggEAVi9yIQhoL4hRZSYTbzWYpRWxhgTFJpNXli2ZNKuSGZ42\naBlM9MHOmtLVntibVwPA4RqeBphHFxaLaKUktBLTY967pSyeDWnhoBf+KC5O+QWI\nafqGcn+zSkYztDlR2YNA9/CBaWQo51OJlUBlYNDyFPLXR1BFGz0Ade94yQ0Lkmy+\nTPkOrP9UvSoeFrKdt76ECLXEqg/Tc2CzEs3sqTe7dpFNL17j8Oislm3ttO8xpEgW\nuvJd13Ywe+ikLU1YeeX85f0zxmmO1vTvJ8Vzx+e+VtjfTvOkJ1dcQYCTL5VfMtv1\nYgpneVfCuLw9AE1BtntQ2Ba8oTpzly3FOJEaLw9qbwKBgQDmSS8dTuFHpgzeDYpU\nwm+KCRYoO3ldDaz8BiiopdDB9ZUzM+MpdOgGde90A8RcYSD+9+M1TyEC7vzRVB68\ni3y68hi4kzp8d3oqpvqdRbOeCGwqgFr4zVNSiLiVIkaYvXaiQaxw9gawDcrpEFEc\nFPTMLMrHcx/v0tijJ7Bzd94GMwKBgQDaCnNK13jG0T32INjnRmsTyROOrvBtQS0g\nIbt9M0KOA2g9p1Td0y6rZ3jErh88tTqPmN15ow7DX7hKBXNIhBA3eWuEnUjh5j6A\nKIj+tb9lgMMRbS8nP7avkxPM+cnze9okgScLNZ5FXAQ+6aLnjOfF8TaBVAENtwYE\nJ73A/J62ewKBgCL0oO419wRFNFbQf1r2WK//SRm6TWXOmZ9339wZr2KBwLARBD5a\nvI2egUZ+++N56uRJBHgnFr+3PzEXL8M2+Sv3a8E4t/wEtsqaphgRaH5okOKysRxr\nLmas0jfxB/5PZB6lEWPkNIes0Ewoaed1VuNXOUClPQfOXYwGjkY4v775AoGAFjRO\nPWboA8c3OiNqM1M2gFNPzI4AKgAjKkyFHWDk/DVYnj62I8jnzcjBwbXBtJr4FbuJ\ngmOak0biK5eWf+IDDMMusdianXanEsIOAXJcxWdxdgrabHLOld6ye4NMj6EjO+hz\nI28YaRPP0uBUGKR+zeecl1sIqG7lC/NIHakcOJUCgYEAxshXS3SVJGkN4XJ7l8+5\nHymIS3J8GmEyMsTdlVjg+zyTQdlXJyYUHM3jQYAAW9gXpohGi7a/pSDH9n18U51h\ncup41dLLnkkdYmAMVtEy0R5n5asQiE5CslCkpVZN79awjgyq0rQ0Seu1hqWOGQrQ\nHb5PeTwRaS0pxN2tnkTLXYE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@stock-market-data-8947e.iam.gserviceaccount.com",
+  "client_id": "110922781916857011104",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40stock-market-data-8947e.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
